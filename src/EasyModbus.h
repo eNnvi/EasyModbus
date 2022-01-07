@@ -46,6 +46,7 @@ enum ModbusError {
   WRONG_DEVICE, ///< Device that responded differs from called one
 	UNEXPECTED_RESPONSE, ///< Response byte count differs from what expected (might need to increase timeout time)
 	UNIMPLEMENTED,	///< Function yet TBI
+	UNEQUAL,	///< In writing modes the response should be echo of the request, if not this error triggers
 	GENERIC, ///< When none of the above..
 };
 

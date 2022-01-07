@@ -1,10 +1,4 @@
-# Summary
-
- Members                        | Descriptions                                
---------------------------------|---------------------------------------------
-`class `[`EasyModbusRTU`](#class_easy_modbus_r_t_u) | 
-
-# class `EasyModbusRTU` 
+# class `EasyModbusRTU` {#class_easy_modbus_r_t_u}
 
 ## Summary
 
@@ -21,12 +15,12 @@
 `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`readHoldingRegister`](#class_easy_modbus_r_t_u_1a0be60db0719f135012f5bee3fd38b1d3)`(uint16_t start_register,uint16_t registers_to_read,uint16_t return_var)` | Reads multiple holding registers (function 0x03)
 `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`readInputRegister`](#class_easy_modbus_r_t_u_1aef2ad2f01d50ed3077413ad2ca782e2b)`(uint16_t start_register,uint16_t registers_to_read,uint16_t return_var)` | Reads multiple input registers (function 0x04)
 `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`writeSingleCoil`](#class_easy_modbus_r_t_u_1a89653c68dd6ac1ca9ceac195eb77e9a8)`(uint16_t coil_address,bool value)` | Write in to a single holding register (function 0x05)
-`public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`writeSingleRegister`](#class_easy_modbus_r_t_u_1a96c4d36625b21e7fe5857f384a78ea78)`(uint16_t register,uint16_t value)` | Write in to a single holding register (function 0x06)
+`public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`writeSingleRegister`](#class_easy_modbus_r_t_u_1a702673f7d42024a55468e0b9e075709a)`(uint16_t register_addr,uint16_t value)` | Write in to a single holding register (function 0x06)
 `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`writeMultipleRegister`](#class_easy_modbus_r_t_u_1a8e52c75e6cf4640566f5a57270b64684)`(uint16_t start_register,uint16_t registers_to_write,uint16_t value)` | Write in to multiple holding register (function 0x16)
 
 ## Members
 
-#### `public  `[`EasyModbusRTU`](#class_easy_modbus_r_t_u_1af39a609e166e6d7ab4dd8944917aa42b)`(uint8_t address,Stream & comm_stream)` 
+#### `public  `[`EasyModbusRTU`](#class_easy_modbus_r_t_u_1af39a609e166e6d7ab4dd8944917aa42b)`(uint8_t address,Stream & comm_stream)` {#class_easy_modbus_r_t_u_1af39a609e166e6d7ab4dd8944917aa42b}
 
 Constructor.
 
@@ -42,9 +36,9 @@ Create a new [EasyModbusRTU](#class_easy_modbus_r_t_u) object. Required params a
 
 * `serial_config` serial data config (data bits, parity, stop)
 
-#### `public  `[`EasyModbusRTU`](#class_easy_modbus_r_t_u_1a4ee434c99b7a665c03ae35f12867ce0b)`(uint8_t address,Stream & comm_stream,uint8_t comm_pin)` 
+#### `public  `[`EasyModbusRTU`](#class_easy_modbus_r_t_u_1a4ee434c99b7a665c03ae35f12867ce0b)`(uint8_t address,Stream & comm_stream,uint8_t comm_pin)` {#class_easy_modbus_r_t_u_1a4ee434c99b7a665c03ae35f12867ce0b}
 
-#### `public void `[`begin`](#class_easy_modbus_r_t_u_1af8f23f5462b568bc453c7d69c28d79b7)`(unsigned long baud)` 
+#### `public void `[`begin`](#class_easy_modbus_r_t_u_1af8f23f5462b568bc453c7d69c28d79b7)`(unsigned long baud)` {#class_easy_modbus_r_t_u_1af8f23f5462b568bc453c7d69c28d79b7}
 
 Starts communication settings.
 
@@ -53,14 +47,14 @@ Starts communication settings.
 
 *
 
-#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`lastError`](#class_easy_modbus_r_t_u_1ad6c4ee4387f17974ba30d658014e06a5)`()` 
+#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`lastError`](#class_easy_modbus_r_t_u_1ad6c4ee4387f17974ba30d658014e06a5)`()` {#class_easy_modbus_r_t_u_1ad6c4ee4387f17974ba30d658014e06a5}
 
 Retrieves last modbus error.
 
 #### Returns
 error or ModbusError::SUCCESS if ok
 
-#### `public char * `[`errorToString`](#class_easy_modbus_r_t_u_1af86c1702bde17bffe165eb2494c052cf)`(`[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` error_number)` 
+#### `public char * `[`errorToString`](#class_easy_modbus_r_t_u_1af86c1702bde17bffe165eb2494c052cf)`(`[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` error_number)` {#class_easy_modbus_r_t_u_1af86c1702bde17bffe165eb2494c052cf}
 
 Retrieves a given modbus error in human readable.
 
@@ -70,14 +64,14 @@ Retrieves a given modbus error in human readable.
 #### Returns
 C string of last modbus error in human readable format
 
-#### `public char * `[`lastErrorToString`](#class_easy_modbus_r_t_u_1a5fe6714effbea36ab102095a2a656cbc)`()` 
+#### `public char * `[`lastErrorToString`](#class_easy_modbus_r_t_u_1a5fe6714effbea36ab102095a2a656cbc)`()` {#class_easy_modbus_r_t_u_1a5fe6714effbea36ab102095a2a656cbc}
 
 Retrieves last modbus error in human readable format.
 
 #### Returns
 C string of last modbus error in human readable format
 
-#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`readCoils`](#class_easy_modbus_r_t_u_1a55b19363f9ed31b79d503cdf79aed46e)`(uint16_t start_coil,uint16_t coils_to_read,uint16_t return_var)` 
+#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`readCoils`](#class_easy_modbus_r_t_u_1a55b19363f9ed31b79d503cdf79aed46e)`(uint16_t start_coil,uint16_t coils_to_read,uint16_t return_var)` {#class_easy_modbus_r_t_u_1a55b19363f9ed31b79d503cdf79aed46e}
 
 Reads coils status (function 0x01)
 
@@ -91,7 +85,7 @@ Reads coils status (function 0x01)
 #### Returns
 error or ModbusError::SUCCESS if ok
 
-#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`readDiscreteInputs`](#class_easy_modbus_r_t_u_1a9baeda5ca90ddd73ce45987d105ad01d)`(uint16_t start_input,uint16_t inputs_to_read,uint16_t return_var)` 
+#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`readDiscreteInputs`](#class_easy_modbus_r_t_u_1a9baeda5ca90ddd73ce45987d105ad01d)`(uint16_t start_input,uint16_t inputs_to_read,uint16_t return_var)` {#class_easy_modbus_r_t_u_1a9baeda5ca90ddd73ce45987d105ad01d}
 
 Reads dicrete input status (function 0x02)
 
@@ -105,7 +99,7 @@ Reads dicrete input status (function 0x02)
 #### Returns
 error or ModbusError::SUCCESS if ok
 
-#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`readHoldingRegister`](#class_easy_modbus_r_t_u_1a0be60db0719f135012f5bee3fd38b1d3)`(uint16_t start_register,uint16_t registers_to_read,uint16_t return_var)` 
+#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`readHoldingRegister`](#class_easy_modbus_r_t_u_1a0be60db0719f135012f5bee3fd38b1d3)`(uint16_t start_register,uint16_t registers_to_read,uint16_t return_var)` {#class_easy_modbus_r_t_u_1a0be60db0719f135012f5bee3fd38b1d3}
 
 Reads multiple holding registers (function 0x03)
 
@@ -119,7 +113,7 @@ Reads multiple holding registers (function 0x03)
 #### Returns
 error or ModbusError::SUCCESS if ok
 
-#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`readInputRegister`](#class_easy_modbus_r_t_u_1aef2ad2f01d50ed3077413ad2ca782e2b)`(uint16_t start_register,uint16_t registers_to_read,uint16_t return_var)` 
+#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`readInputRegister`](#class_easy_modbus_r_t_u_1aef2ad2f01d50ed3077413ad2ca782e2b)`(uint16_t start_register,uint16_t registers_to_read,uint16_t return_var)` {#class_easy_modbus_r_t_u_1aef2ad2f01d50ed3077413ad2ca782e2b}
 
 Reads multiple input registers (function 0x04)
 
@@ -133,7 +127,7 @@ Reads multiple input registers (function 0x04)
 #### Returns
 error or ModbusError::SUCCESS if ok
 
-#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`writeSingleCoil`](#class_easy_modbus_r_t_u_1a89653c68dd6ac1ca9ceac195eb77e9a8)`(uint16_t coil_address,bool value)` 
+#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`writeSingleCoil`](#class_easy_modbus_r_t_u_1a89653c68dd6ac1ca9ceac195eb77e9a8)`(uint16_t coil_address,bool value)` {#class_easy_modbus_r_t_u_1a89653c68dd6ac1ca9ceac195eb77e9a8}
 
 Write in to a single holding register (function 0x05)
 
@@ -145,19 +139,19 @@ Write in to a single holding register (function 0x05)
 #### Returns
 error or ModbusError::SUCCESS if ok
 
-#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`writeSingleRegister`](#class_easy_modbus_r_t_u_1a96c4d36625b21e7fe5857f384a78ea78)`(uint16_t register,uint16_t value)` 
+#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`writeSingleRegister`](#class_easy_modbus_r_t_u_1a702673f7d42024a55468e0b9e075709a)`(uint16_t register_addr,uint16_t value)` {#class_easy_modbus_r_t_u_1a702673f7d42024a55468e0b9e075709a}
 
 Write in to a single holding register (function 0x06)
 
 #### Parameters
-* `register` 2 byte register to write into 
+* `register_addr` 2 byte register to write into 
 
 * `value` 2 byte value to write into register 
 
 #### Returns
 error or ModbusError::SUCCESS if ok
 
-#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`writeMultipleRegister`](#class_easy_modbus_r_t_u_1a8e52c75e6cf4640566f5a57270b64684)`(uint16_t start_register,uint16_t registers_to_write,uint16_t value)` 
+#### `public `[`ModbusError`](#_easy_modbus_8h_1a3e91ea9ea1b4d5927573e6ec1d1cce6e)` `[`writeMultipleRegister`](#class_easy_modbus_r_t_u_1a8e52c75e6cf4640566f5a57270b64684)`(uint16_t start_register,uint16_t registers_to_write,uint16_t value)` {#class_easy_modbus_r_t_u_1a8e52c75e6cf4640566f5a57270b64684}
 
 Write in to multiple holding register (function 0x16)
 

@@ -158,11 +158,11 @@ public:
 	
 	/**
      * @brief Write in to a single holding register (function 0x06)
-     * @param register 2 byte register to write into
+     * @param register_addr 2 byte register to write into
      * @param value 2 byte value to write into register
      * @return error or ModbusError::SUCCESS if ok
   */
-  ModbusError writeSingleRegister(uint16_t register, uint16_t value);
+  ModbusError writeSingleRegister(uint16_t register_addr, uint16_t value);
 	
 	
 	/**

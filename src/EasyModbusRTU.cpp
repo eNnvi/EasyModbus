@@ -174,6 +174,8 @@ char* EasyModbusRTU::errorToString(ModbusError error_number) {
 			return "Func unimplemented yet";
 		case GENERIC:
 			return "Generic error";
+		case UNEQUAL:
+			return "Response is not equal to request";
 		default:
 			return "Unknown error";
 	}
@@ -226,8 +228,29 @@ ModbusError EasyModbusRTU::writeSingleCoil(uint16_t coil_address, bool value) {
 	return ModbusError::UNIMPLEMENTED;
 }
 
-ModbusError EasyModbusRTU::writeSingleRegister(uint16_t register, uint16_t value) {
-	return ModbusError::UNIMPLEMENTED;
+ModbusError EasyModbusRTU::writeSingleRegister(uint16_t register_addr, uint16_t value) {
+	// request format:
+  //  1. address
+  //  2. operation (write single register (0x06))
+  //  3. Register address high
+  //  4. Register address low
+  //  5. Value high
+  //  6. Value low
+	uint8_t request[6] = {address, 0x06, (uint8_t)(register_addr >> 8), (uint8_t)register_addr, (uint8_t)(value >> 8), (uint8_t)value};
+	
+	// array wich will contain the response, response is echo of request, so we have 8 bytes (6 of the request + 2 crc)
+	uint8_t response_size = 8;
+	uint8_t response[response_size];
+	
+	// request data
+	ModbusError comm = performCommunication(request, 6, response, response_size);
+	
+	if(comm != SUCCESS) return comm; // error handling communication
+	
+	// now check if response is equal
+	if(!isEqual(request, response, 6)) return ModbusError::UNEQUAL;
+	
+	return SUCCESS;
 }
 
 ModbusError EasyModbusRTU::writeMultipleRegister(uint16_t start_register, uint16_t registers_to_write, uint16_t value[]) {

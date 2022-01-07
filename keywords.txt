@@ -1,0 +1,38 @@
+#######################################
+# Syntax Coloring Map For EasyModbus
+#######################################
+
+# Datatypes (KEYWORD1)
+EasyModbus    KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+EasyModbus							KEYWORD2
+
+begin									KEYWORD2
+lastError							KEYWORD2
+errorToString					KEYWORD2
+lastErrorToString			KEYWORD2
+readCoils							KEYWORD2
+readDiscreteInputs		KEYWORD2
+readHoldingRegister		KEYWORD2
+readInputRegister			KEYWORD2
+writeSingleCoil				KEYWORD2
+writeSingleRegister		KEYWORD2
+writeMultipleRegister	KEYWORD2
+
+# Structures (KEYWORD3)
+ModbusError				KEYWORD3
+
+# Constants (LITERAL1)
+CP_TRANSMIT_LEVEL				LITERAL3
+CP_RECEIVE_LEVEL				LITERAL3
+COMM_TIMEOUT_TIME				LITERAL3
+
+
+SUCCESS							LITERAL3
+WRONG_CRC						LITERAL3
+NO_RESPONSE					LITERAL3
+UNEXPECTED_RESPONSE	LITERAL3
+GENERIC							LITERAL3
+WRONG_DEVICE				LITERAL3
+UNIMPLEMENTED				LITERAL3

@@ -39,7 +39,7 @@
 #endif
 
 /// ModbusError enum class is used to check if there's been a bad communication
-enum ModbusError {
+enum ModbusError : uint8_t {
   SUCCESS=0, ///< Success in communication, no error
   WRONG_CRC, ///< CRC calculation differs..
   NO_RESPONSE, ///< No response in communication timeout time

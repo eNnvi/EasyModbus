@@ -217,6 +217,7 @@ ModbusError EasyModbusRTU::readHoldingRegister(uint16_t start_register, uint16_t
 	for(int i = 0; i < registers_to_read*2; i += 2) {
 		return_var[i/2] = (response[i + 3] << 8) | (response[i + 4]);
 	}
+	
 	return SUCCESS;
 }
 
@@ -248,7 +249,10 @@ ModbusError EasyModbusRTU::writeSingleRegister(uint16_t register_addr, uint16_t 
 	if(comm != SUCCESS) return comm; // error handling communication
 	
 	// now check if response is equal
-	if(!isEqual(request, response, 6)) return ModbusError::UNEQUAL;
+	if(!isEqual(request, response, 6)) {
+		last_error = ModbusError::UNEQUAL;
+		return ModbusError::UNEQUAL;
+	}
 	
 	return SUCCESS;
 }

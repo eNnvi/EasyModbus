@@ -47,7 +47,47 @@ enum ModbusError {
 	UNEXPECTED_RESPONSE, ///< Response byte count differs from what expected (might need to increase timeout time)
 	UNIMPLEMENTED,	///< Function yet TBI
 	UNEQUAL,	///< In writing modes the response should be echo of the request, if not this error triggers
+	// EXCEPTION CODES!
+	FUNCTION_CODE_UNSUPPORTED,		///< Device doesn't support tish function
+	OUTPUT_OUT_OF_RANGE,				///< Too many or too few registers/coils requested
+	OUT_OF_ADDRESS,				///< Device can't find all addresses
+	DEVICE_ERROR,					///< Device unable to complete operation
+	WRONG_DATA_VALUE,			///< Device didn't get good data
 	GENERIC, ///< When none of the above..
+};
+
+/*
+	Every function has an error code for different scenarios.
+	
+	Function 0x01 (read coils)
+		0x01	FUNCTION_CODE_UNSUPPORTED
+		0x02  OUTPUT_OUT_OF_RANGE
+		0x03	OUT_OF_ADDRESS
+		0x04	DEVICE_ERROR
+	
+	Almost every functions gives same kind of error.
+	Big differences:
+		- in write operations codes 0x02 and 0x03 are inverted 
+		- in serial line only operations there are error codes 0x01 and 0x04
+
+*/
+const ModbusError errorMappingTable[][4] PROGMEM = {
+	{FUNCTION_CODE_UNSUPPORTED, OUTPUT_OUT_OF_RANGE, OUT_OF_ADDRESS, DEVICE_ERROR},	// 0x01
+	{FUNCTION_CODE_UNSUPPORTED, OUTPUT_OUT_OF_RANGE, OUT_OF_ADDRESS, DEVICE_ERROR},	// 0x02
+	{FUNCTION_CODE_UNSUPPORTED, OUTPUT_OUT_OF_RANGE, OUT_OF_ADDRESS, DEVICE_ERROR},	// 0x03
+	{FUNCTION_CODE_UNSUPPORTED, OUTPUT_OUT_OF_RANGE, OUT_OF_ADDRESS, DEVICE_ERROR},	// 0x04
+	{FUNCTION_CODE_UNSUPPORTED, OUT_OF_ADDRESS, OUTPUT_OUT_OF_RANGE, DEVICE_ERROR}, // 0x05
+	{FUNCTION_CODE_UNSUPPORTED, OUT_OF_ADDRESS, OUTPUT_OUT_OF_RANGE, DEVICE_ERROR}, // 0x06
+	{FUNCTION_CODE_UNSUPPORTED, SUCCESS, SUCCESS, DEVICE_ERROR}, // 0x07
+	{FUNCTION_CODE_UNSUPPORTED, SUCCESS, WRONG_DATA_VALUE, DEVICE_ERROR}, // 0x08
+	{SUCCESS, SUCCESS, SUCCESS, SUCCESS}, // 0x09
+	{SUCCESS, SUCCESS, SUCCESS, SUCCESS}, // 0x0A
+	{FUNCTION_CODE_UNSUPPORTED, SUCCESS, SUCCESS, DEVICE_ERROR}, // 0x0B
+	{FUNCTION_CODE_UNSUPPORTED, SUCCESS, SUCCESS, DEVICE_ERROR}, // 0x0C
+	{SUCCESS, SUCCESS, SUCCESS, SUCCESS}, // 0x0D
+	{SUCCESS, SUCCESS, SUCCESS, SUCCESS}, // 0x0E
+	{FUNCTION_CODE_UNSUPPORTED, OUT_OF_ADDRESS, OUTPUT_OUT_OF_RANGE, DEVICE_ERROR}, // 0x0F
+	{FUNCTION_CODE_UNSUPPORTED, OUT_OF_ADDRESS, OUTPUT_OUT_OF_RANGE, DEVICE_ERROR}, // 0x10
 };
 
 

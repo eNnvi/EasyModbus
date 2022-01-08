@@ -91,7 +91,7 @@ ModbusError EasyModbusRTU::performCommunication(uint8_t payload[], uint8_t paylo
 
   if(comm_stream->available() != -1 && comm_stream->available() < expected_response_size) { // data size mismatch
     last_error = ModbusError::UNEXPECTED_RESPONSE;
-    return last_error; // unexpected result...
+		// even if we have unexpected response could be because of exception handling
   }
 
   if(comm_stream->available() == -1) {  // if nothing in buffer timeout happened
@@ -103,15 +103,24 @@ ModbusError EasyModbusRTU::performCommunication(uint8_t payload[], uint8_t paylo
   int i = 0;
   while(comm_stream->available()) response[i++] = comm_stream->read();
 	
+
+  if(response[0] != address) {  // is the device who's calling our device?
+    last_error = ModbusError::WRONG_DEVICE;
+    return last_error;
+  }
+	
+	// check exception
+	if(last_error == ModbusError::UNEXPECTED_RESPONSE) {
+		if(response[1] == payload[1] + 0x80) {	// exception code!
+			last_error = errorMappingTable[payload[1] - 1][response[2] - 1];
+		}
+		return last_error; // exception code or unexpected response
+	}
+	
 	// calc crc on the response
   uint16_t response_crc = calcCrc(response, expected_response_size-2); // calc on all bytes except 2 CRC bytes
   if((uint8_t)(response_crc >> 8) != response[expected_response_size-2] || (uint8_t)response_crc != response[expected_response_size-1]) { // CRC mismatch
     last_error = ModbusError::WRONG_CRC;
-    return last_error;
-  }
-
-  if(response[0] != address) {  // is the device who's calling our device?
-    last_error = ModbusError::WRONG_DEVICE;
     return last_error;
   }
 	
@@ -176,6 +185,16 @@ char* EasyModbusRTU::errorToString(ModbusError error_number) {
 			return "Generic error";
 		case UNEQUAL:
 			return "Response is not equal to request";
+		case FUNCTION_CODE_UNSUPPORTED:
+			return "Device doesn't allow this function";
+		case OUTPUT_OUT_OF_RANGE:
+			return "Request over device limits";
+		case OUT_OF_ADDRESS:
+			return "Request over address limits";
+		case DEVICE_ERROR:
+			return "Error in device";
+		case WRONG_DATA_VALUE:
+			return "Wrong data format";
 		default:
 			return "Unknown error";
 	}

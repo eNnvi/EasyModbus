@@ -286,7 +286,7 @@ ModbusError EasyModbusRTU::customFunction(uint8_t function, uint8_t data_to_send
 	uint8_t payload[data_to_send_size + 2];
 	payload[0] = address;
 	payload[1] = function;
-	memcpy(payload[2], data_to_send, data_to_send_size);
+	memcpy(payload + 2, data_to_send, data_to_send_size);
 	
 	uint8_t return_var[expected_response_size + 4];
 	
@@ -296,7 +296,7 @@ ModbusError EasyModbusRTU::customFunction(uint8_t function, uint8_t data_to_send
 	if(comm != SUCCESS) return comm; // error handling communication
 	
 	// return variable memory copy
-	memcpy(response, return_var[3], expected_response_size);
+	memcpy(response, return_var + 3, expected_response_size);
 	
 	return SUCCESS;
 }

@@ -104,7 +104,7 @@ ModbusError EasyModbusRTU::performCommunication(uint8_t payload[], uint8_t paylo
   while(comm_stream->available()) response[i++] = comm_stream->read();
 	
 	// if we want raw data only basic checks are made, no CRC control
-	if(raw_data) return ModbusError::SUCCESS;
+	if(raw_data) return last_error;
 
   if(response[0] != address) {  // is the device who's calling our device?
     last_error = ModbusError::WRONG_DEVICE;

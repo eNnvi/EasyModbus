@@ -227,7 +227,7 @@ ModbusError EasyModbusRTU::readHoldingRegister(uint16_t start_register, uint16_t
 	
 	// array wich will contain the response, size is header (3) + registers_to_read*2 + crc (2)
 	uint8_t response_size = 5 + (registers_to_read * 2);
-	uint8_t response[response_size];
+	uint8_t response[response_size] = {0};
 	
 	// request data
 	ModbusError comm = performCommunication(request, 6, response, response_size);
@@ -262,7 +262,7 @@ ModbusError EasyModbusRTU::writeSingleRegister(uint16_t register_addr, uint16_t 
 	
 	// array wich will contain the response, response is echo of request, so we have 8 bytes (6 of the request + 2 crc)
 	uint8_t response_size = 8;
-	uint8_t response[response_size];
+	uint8_t response[response_size] = {0};
 	
 	// request data
 	ModbusError comm = performCommunication(request, 6, response, response_size);
@@ -283,12 +283,12 @@ ModbusError EasyModbusRTU::writeMultipleRegister(uint16_t start_register, uint16
 }
 
 ModbusError EasyModbusRTU::customFunction(uint8_t function, uint8_t data_to_send[], uint16_t data_to_send_size, uint8_t response[], uint16_t expected_response_size) {
-	uint8_t payload[data_to_send_size + 2];
+	uint8_t payload[data_to_send_size + 2] = {0};
 	payload[0] = address;
 	payload[1] = function;
 	memcpy(payload + 2, data_to_send, data_to_send_size);
 	
-	uint8_t return_var[expected_response_size + 4];
+	uint8_t return_var[expected_response_size + 4] = {0};
 	
 	// request data (raw format)
 	ModbusError comm = performCommunication(payload, data_to_send_size + 2, return_var, expected_response_size + 4, true);

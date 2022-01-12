@@ -281,4 +281,22 @@ ModbusError EasyModbusRTU::writeSingleRegister(uint16_t register_addr, uint16_t 
 ModbusError EasyModbusRTU::writeMultipleRegister(uint16_t start_register, uint16_t registers_to_write, uint16_t value[]) {
 	return ModbusError::UNIMPLEMENTED;
 }
+
+ModbusError EasyModbusRTU::customFunction(uint8_t function, uint8_t data_to_send[], uint16_t data_to_send_size, uint8_t response[], uint16_t expected_response_size) {
+	uint8_t payload[data_to_send_size + 2];
+	payload[0] = address;
+	payload[1] = function;
+	memcpy(payload[2], data_to_send, data_to_send_size);
 	
+	uint8_t return_var[expected_response_size + 4];
+	
+	// request data (raw format)
+	ModbusError comm = performCommunication(payload, data_to_send_size + 2, return_var, expected_response_size + 4, true);
+	
+	if(comm != SUCCESS) return comm; // error handling communication
+	
+	// return variable memory copy
+	memcpy(response, return_var[3], expected_response_size);
+	
+	return SUCCESS;
+}

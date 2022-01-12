@@ -174,6 +174,21 @@ public:
   */
   ModbusError writeMultipleRegister(uint16_t start_register, uint16_t registers_to_write, uint16_t value[]);
 	
+	/**
+	  This functions allow to perform a custom function in the slave.
+		Many devices are not 100% modbus compliant or have custom functions.
+		This method will add the address and the CRC checksum to the data_to_send payload.
+		WARNING: Error checking will cover only a missing and size mismatching response, no other checks (even CRC control) will be performed!
+     * @brief Creates a custom function (many "modbus" devices are not 100% modbus compliant)
+     * @param function is the custom function wich will be executed
+     * @param data_to_send pointer to the array with data to send
+     * @param data_to_send_size size of data to send
+     * @param response pointer to the array wich will store the response
+     * @param expected_response_size expected return bytes
+     * @return error or ModbusError::SUCCESS if ok
+  */
+  ModbusError customFunction(uint8_t function, uint8_t data_to_send[], uint16_t data_to_send_size, uint8_t response[], uint16_t expected_response_size);
+	
 };
 
 

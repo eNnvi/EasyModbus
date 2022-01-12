@@ -62,7 +62,7 @@ void EasyModbusRTU::clearReadBuffer() {
  * On call resets last_error, performs communication, check wether there's any common problem (NO_RESPONSE, WRONG_CRC, WRONG_DEVICE)
  * Performs communication to the slave device
  */
-ModbusError EasyModbusRTU::performCommunication(uint8_t payload[], uint8_t payload_size, uint8_t response[], uint8_t expected_response_size) {
+ModbusError EasyModbusRTU::performCommunication(uint8_t payload[], uint8_t payload_size, uint8_t response[], uint8_t expected_response_size, bool raw_data) {
 	// reset last error
 	last_error = ModbusError::SUCCESS;
 
@@ -88,7 +88,7 @@ ModbusError EasyModbusRTU::performCommunication(uint8_t payload[], uint8_t paylo
 	// getting response
   long started = millis();
   while(comm_stream->available() < 8 && millis()-started < COMM_TIMEOUT_TIME); // wait response
-
+	
   if(comm_stream->available() != -1 && comm_stream->available() < expected_response_size) { // data size mismatch
     last_error = ModbusError::UNEXPECTED_RESPONSE;
 		// even if we have unexpected response could be because of exception handling
@@ -103,6 +103,8 @@ ModbusError EasyModbusRTU::performCommunication(uint8_t payload[], uint8_t paylo
   int i = 0;
   while(comm_stream->available()) response[i++] = comm_stream->read();
 	
+	// if we want raw data only basic checks are made, no CRC control
+	if(raw_data) return ModbusError::SUCCESS;
 
   if(response[0] != address) {  // is the device who's calling our device?
     last_error = ModbusError::WRONG_DEVICE;

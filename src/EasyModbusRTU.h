@@ -65,7 +65,7 @@ class EasyModbusRTU {
 		 * @param expected_response_size size of response (including header and crc)
 		 * @return last communication error, ModbusError::SUCCESS on success
 	*/	
-	ModbusError performCommunication(uint8_t payload[], uint8_t payload_size, uint8_t response[], uint8_t expected_response_size);
+	ModbusError performCommunication(uint8_t payload[], uint8_t payload_size, uint8_t response[], uint8_t expected_response_size, bool raw_data = false);
 
 	
 public:

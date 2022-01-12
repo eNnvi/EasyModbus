@@ -55,7 +55,7 @@ bool EasyModbusRTU::isEqual(uint8_t* arr1, uint8_t* arr2, int length) {
 
 
 void EasyModbusRTU::clearReadBuffer() {
-	while(comm_stream->available()) comm_stream->read(); // clear read buffer!
+	while(comm_stream->read() != -1); // clear read buffer!
 }
 
 /*

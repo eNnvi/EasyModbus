@@ -86,15 +86,15 @@ ModbusError EasyModbusRTU::performCommunication(uint8_t payload[], uint8_t paylo
   }
 	
 	// getting response
-  long started = millis();
+  uint32_t started = millis();
   while(comm_stream->available() < 8 && millis()-started < COMM_TIMEOUT_TIME); // wait response
 	
-  if(comm_stream->available() != -1 && comm_stream->available() < expected_response_size) { // data size mismatch
+  if(comm_stream->available() != 0 && comm_stream->available() < expected_response_size) { // data size mismatch
     last_error = ModbusError::UNEXPECTED_RESPONSE;
 		// even if we have unexpected response could be because of exception handling
   }
 
-  if(comm_stream->available() == -1) {  // if nothing in buffer timeout happened
+  if(comm_stream->available() == 0) {  // if nothing in buffer timeout happened
     last_error = ModbusError::NO_RESPONSE;
     return last_error; // nothing in buffer...
   }

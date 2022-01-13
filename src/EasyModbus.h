@@ -71,7 +71,7 @@ enum ModbusError : uint8_t {
 		- in serial line only operations there are error codes 0x01 and 0x04
 
 */
-const ModbusError errorMappingTable[][4] PROGMEM = {
+const ModbusError errorMappingTable[][4] = {
 	{FUNCTION_CODE_UNSUPPORTED, OUTPUT_OUT_OF_RANGE, OUT_OF_ADDRESS, DEVICE_ERROR},	// 0x01
 	{FUNCTION_CODE_UNSUPPORTED, OUTPUT_OUT_OF_RANGE, OUT_OF_ADDRESS, DEVICE_ERROR},	// 0x02
 	{FUNCTION_CODE_UNSUPPORTED, OUTPUT_OUT_OF_RANGE, OUT_OF_ADDRESS, DEVICE_ERROR},	// 0x03

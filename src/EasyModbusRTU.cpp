@@ -66,15 +66,15 @@ ModbusError EasyModbusRTU::performCommunication(uint8_t payload[], uint8_t paylo
 	// reset last error
 	last_error = ModbusError::SUCCESS;
 
+	clearReadBuffer();
 	
   uint16_t crc = calcCrc(payload, payload_size); // calculating CRC
 
   if(comm_pin != -1) { // if using a half duplex TTL converter put in transimt mode
     digitalWrite(comm_pin, CP_TRANSMIT_LEVEL);
   }
-	
-	clearReadBuffer();
-	
+
+
   delay(min_timing); // 3.5 char time delay
   comm_stream->write(payload, payload_size);
 	comm_stream->write((uint8_t)(crc >> 8));
@@ -88,7 +88,6 @@ ModbusError EasyModbusRTU::performCommunication(uint8_t payload[], uint8_t paylo
 	// getting response
   uint32_t started = millis();
   while(comm_stream->available() < expected_response_size && millis()-started < COMM_TIMEOUT_TIME); // wait response
-	
 	
 	if(comm_stream->available() == 0) {  // if nothing in buffer timeout happened
     last_error = ModbusError::NO_RESPONSE;
@@ -115,7 +114,9 @@ ModbusError EasyModbusRTU::performCommunication(uint8_t payload[], uint8_t paylo
 	// check exception
 	if(last_error == ModbusError::UNEXPECTED_RESPONSE) {
 		if(response[1] == payload[1] + 0x80) {	// exception code!
-			last_error = errorMappingTable[payload[1] - 1][response[2] - 1];
+		uint8_t error_function = payload[1] - 1;
+		uint8_t error_code = response[2] - 1;
+			last_error = errorMappingTable[error_function][error_code];
 		}
 		return last_error; // exception code or unexpected response
 	}
@@ -156,8 +157,6 @@ void EasyModbusRTU::begin(unsigned long baud) {
   }
 	
 	this->baud_rate = baud;
-	this->serial_config = serial_config;
-	
 	this->min_timing = (uint8_t)floor(1000/(baud/10)*3.5f);
 
 	// start serial with our settings!
@@ -199,7 +198,7 @@ char* EasyModbusRTU::errorToString(ModbusError error_number) {
 		case WRONG_DATA_VALUE:
 			return "Wrong data format";
 		default:
-			return "Unknown error";
+		  return "Unknown error";
 	}
 }
 

@@ -77,8 +77,8 @@ ModbusError EasyModbusRTU::performCommunication(uint8_t payload[], uint8_t paylo
 	
   delay(min_timing); // 3.5 char time delay
   comm_stream->write(payload, payload_size);
-	comm_stream->write((uint8_t)crc);
 	comm_stream->write((uint8_t)(crc >> 8));
+	comm_stream->write((uint8_t)crc);
   comm_stream->flush(); // waiting end of transmission
 
   if(comm_pin != -1) { // getting back to receive mode if needed
